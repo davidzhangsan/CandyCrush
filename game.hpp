@@ -4,10 +4,7 @@
 #include <iostream>
 #include <vector>
 
-class game
-{
-private:
-    enum Candy
+enum Candy
     {
         EMPTY = 0,
         BLUE = 1,
@@ -36,6 +33,10 @@ private:
         WYELLOW = 36,
         COLORBOMB = 40
     };
+
+class game
+{
+private:
     std::vector<std::vector<Candy>> grid;
     int cleared;
 

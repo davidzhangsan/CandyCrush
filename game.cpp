@@ -8,6 +8,7 @@ using namespace std;
 
 game::game()
 {
+    grid = randomBoard();
     // Implement random board construtor.
 }
 
@@ -16,7 +17,7 @@ game::game(std::string filePath)
     // Implement constructor from file
 }
 
-game::Candy game::get(int i, int j)
+Candy game::get(int i, int j)
 {
     return grid[i][j];
 }
@@ -53,13 +54,14 @@ ostream & operator<<(ostream & os, const game & g)
         // Print border
         os << setw(3) << "|";
 
-        // Print either a candy, an empty space, or a frosted piece
+        // Print either a candy or an empty space
         for (int j {0}; j < 9; ++j) {
             // If else logic for the candy printing
-            switch(g.grid[i][j])
-            {
-                case game::Candy::EMPTY: 
-            }
+            // switch(g.grid[i][j])
+            // {
+            //     case game::Candy::EMPTY: 
+            // }
         }
     }
+    return os; //just to compile
 }

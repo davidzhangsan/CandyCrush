@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-std::vector<std::vector<int> > randomBoard(int, int, int numFrosting);
+std::vector<std::vector<Candy> > randomBoard();
 
 int randomCandy();
 
