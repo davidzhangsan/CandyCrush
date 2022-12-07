@@ -7,7 +7,7 @@ using namespace std;
 
 vector<vector<Candy> > randomBoard() 
 {
-	//normal candies: 1, 1, 2, 3, 4, 5, 6
+	//normal candies: 1, 2, 3, 4, 5, 6
 
 	unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 	mt19937 g(seed);

@@ -2,19 +2,28 @@
 #include "random.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 using namespace std;
 
 game::game()
-{
-    grid = randomBoard();
+{    
     // Implement random board construtor.
+    grid = randomBoard();
+    cleared = 0;
 }
 
-game::game(std::string filePath)
+game::game(string filePath)
 {
-    // Implement constructor from file
+    ifstream fin(filePath);
+
+    
+}
+
+void save(string filePath)
+{
+    ofstream fout(filePath);    
 }
 
 Candy game::get(int i, int j)
@@ -26,7 +35,6 @@ int game::getCleared()
 {
     return cleared;
 }
-
 
 ostream & operator<<(ostream & os, const game & g)
 {

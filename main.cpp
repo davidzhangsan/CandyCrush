@@ -35,7 +35,7 @@ int main()
 
         if (command == "start")
         {
-            
+            current = game();
         }
 
         else if (command == "swap")
@@ -50,7 +50,9 @@ int main()
 
         else if (command == "load")
         {
-            
+            string filePath;
+            iss >> filePath;
+            current = game(filePath);
         }
 
         else
