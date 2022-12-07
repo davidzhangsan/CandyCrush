@@ -2,11 +2,12 @@
 #define GAME_HPP
 
 #include <iostream>
+#include <vector>
 
 class game
 {
 private:
-    std::unique_ptr<std::unique_ptr<int []> []> grid;
+    std::vector<std::vector<int>> grid;
 public:
     game();
     game(std::string);
