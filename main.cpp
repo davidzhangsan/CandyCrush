@@ -43,6 +43,16 @@ int main()
             
         }
 
+        else if (command == "save")
+        {
+
+        }
+
+        else if (command == "load")
+        {
+            
+        }
+
         else
         {
             cout << "Type \"start\" to start a new game, or \"swap x1 y1 x2 y2\" to swap the two candies at coordinates (x1, y1) and (x2, y2).\n";
