@@ -1,4 +1,4 @@
-// #include "game.hpp"
+#include "game.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -6,19 +6,21 @@
 
 using namespace std;
 
-// game current;
+bool won;
+int moves;
+game current;
 
-// bool checkForEmpty ()
-// {
-//     for (int i = 0; i < 9; ++i)
-//     {
-//         for (int j = 0; j < 9; ++j)
-//         {
-//             if (current.get(i, j) == 0) return true;
-//         }
-//     }
-//     return false;
-// }
+bool checkForEmpty ()
+{
+    for (int i = 0; i < 9; ++i)
+    {
+        for (int j = 0; j < 9; ++j)
+        {
+            if (current.get(i, j) == 0) return true;
+        }
+    }
+    return false;
+}
 
 int main()
 {
@@ -33,12 +35,12 @@ int main()
 
         if (command == "start")
         {
-
+            
         }
 
         else if (command == "swap")
         {
-
+            
         }
 
         else
