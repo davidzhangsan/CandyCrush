@@ -16,6 +16,12 @@ game::game(std::string filePath)
     // Implement constructor from file
 }
 
+int game::get(int i, int j)
+{
+    return grid[i][j];
+}
+
+
 ostream & operator<<(ostream & os, const game & g)
 {
     os << setw(3) << " " << setw(3) << " "; // Leave a space for the column of y coordinate labels and the border
@@ -44,7 +50,7 @@ ostream & operator<<(ostream & os, const game & g)
 
         // Print either a candy, an empty space, or a frosted piece
         for (int j {1}; j <= 9; ++j) {
-
+            // If else logic for the candy printing
         }
     }
 }
