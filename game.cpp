@@ -16,9 +16,14 @@ game::game(std::string filePath)
     // Implement constructor from file
 }
 
-int game::get(int i, int j)
+game::Candy game::get(int i, int j)
 {
     return grid[i][j];
+}
+
+int game::getCleared()
+{
+    return cleared;
 }
 
 
@@ -49,8 +54,12 @@ ostream & operator<<(ostream & os, const game & g)
         os << setw(3) << "|";
 
         // Print either a candy, an empty space, or a frosted piece
-        for (int j {1}; j <= 9; ++j) {
+        for (int j {0}; j < 9; ++j) {
             // If else logic for the candy printing
+            switch(g.grid[i][j])
+            {
+                case game::Candy::EMPTY: 
+            }
         }
     }
 }
