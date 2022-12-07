@@ -10,6 +10,7 @@ private:
 public:
     game();
     game(std::string);
+    int get(int, int);
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
 
