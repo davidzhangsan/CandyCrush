@@ -6,11 +6,11 @@ Write a short proposal (<500 words) describing your project. In particular, desc
 
 We plan to develop a terminal board game [CandyCrush](https://www.king.com/game/candycrush). We do not plan to use external libraries since the standard library will suffice. We plan to use functionality such as `stringstream` for user commands and saving function, a simple class hierarchy for storing different types of candies, standard library algorithms for generating random numbers, smart pointers to store the game board, etc.
 
-| Lucas                                   | David                                        |
-| --------------------------------------- | -------------------------------------------- |
-| swap command (update the board) 2 hours | board initialization (start command) 2 hours |
-| cells (different candies) 1 hour        | random number generator 1 hour               |
-| frosting feature 1 hour                 | I/O to save the game 1 hour                  |
+| Lucas                                         | David                                       |
+| --------------------------------------------- | ------------------------------------------- |
+| swap command (update the board) 2 hours       | board initialization (start command) 1 hour |
+| setting up game for different candies 2 hours | random number generator 1 hour              |
+|                                               | I/O to save the game 1 hour                 |
 
 
 
