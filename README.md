@@ -25,19 +25,3 @@ We plan to develop a terminal board game [CandyCrush](https://www.king.com/game/
 5. If you swap two special candies with each other, you can create even greater effects!  So, in the example below, if you combine a Wrapped Candy with a Striped Candy, you will create a giant candy that will eliminate 3 columns and 3 rows of candies!
 6. If a swapping doesn't make a row of >= 3 candies, the program does nothing.
 
-#### Representation of Candies
-
-`*` -> 
-
-`#` ->  
-
-`@` ->
-
-`%` ->
-
-
-
-
-
-
-

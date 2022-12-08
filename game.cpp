@@ -17,7 +17,6 @@ game::game()
 game::game(string filePath)
 {
     ifstream fin(filePath);
-
     
 }
 
@@ -36,12 +35,17 @@ int game::getCleared()
     return cleared;
 }
 
+void swap(int x1, int y1, int x2, int y2)
+{
+    
+}
+
 ostream & operator<<(ostream & os, const game & g)
 {
     os << setw(3) << " " << setw(3) << " "; // Leave a space for the column of y coordinate labels and the border
     for (int i {1}; i <= 9; ++i)
     {
-        os << setw(3) << i;
+        os << setw(3) << i << " ";
     }
     os << "\n";
 
@@ -49,7 +53,7 @@ ostream & operator<<(ostream & os, const game & g)
     os << setw(3) << " " << setw(3) << " "; // Leave a space for the column of y coordinate labels and the border
     for (int i {1}; i <= 9; ++i)
     {
-        os << setw(3) << "_";
+        os << setw(3) << "__" << " ";
     }
     os << "\n";
 
@@ -65,6 +69,7 @@ ostream & operator<<(ostream & os, const game & g)
         // Print either a candy or an empty space
         for (int j {0}; j < 9; ++j) {
             // If else logic for the candy printing
+            os << setw(3);
             switch(g.grid[i][j])
             {
                 case Candy::EMPTY   : os << "  "; break;
