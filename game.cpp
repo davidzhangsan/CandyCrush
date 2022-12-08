@@ -35,9 +35,14 @@ int game::getCleared()
     return cleared;
 }
 
+void update()
+{
+    //implement clearing/display clearing
+}
+
 void swap(int x1, int y1, int x2, int y2)
 {
-    
+    //implement swap
 }
 
 ostream & operator<<(ostream & os, const game & g)

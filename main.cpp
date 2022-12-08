@@ -41,7 +41,7 @@ int main()
 
         else if (command == "swap")
         {
-            
+            //maybe a score calculator? or set some form of objective of the game
         }
 
         else if (command == "save")
