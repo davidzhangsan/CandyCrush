@@ -36,6 +36,7 @@ int main()
         if (command == "start")
         {
             current = game();
+            cout << current << endl;
         }
 
         else if (command == "swap")
