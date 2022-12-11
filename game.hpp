@@ -40,12 +40,20 @@ private:
     std::vector<std::vector<Candy>> grid;
     int cleared;
     int moves;
+    
+    bool remove();
+    void fall();
 
 public:
     game();
     game(std::string);
     Candy get(int, int);
     int getCleared();
+    int getMoves();
+    void setMoves(int);
+    void update();
+    void swap(int, int, int, int);
+    bool check3();
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
 

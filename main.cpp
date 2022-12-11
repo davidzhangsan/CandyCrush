@@ -44,21 +44,32 @@ int main()
         {
             if (!inGame)
             {
-                cout << "Type start to begin a new game!";
+                cout << "Type start to begin a new game!\n";
                 continue;
             }
-            //maybe a score calculator? or set some form of objective of the game
             // Check to make sure that swap works
+            if (current.check3()) {
+                int x1, y1, x2, y2;
+                iss >> x1;
+                iss >> y1;
+                iss >> x2;
+                iss >> y2;
+                current.swap(x1, y1, x2, y2);
+            } else
+            {
+                cout << "Please swap two valid candies!\n";
+                continue;
+            }
 
             // Do swapping, and iterate through swapping, calculating the blocks broken
 
             // Check for cleared or too many moves
             cout << "Cleared: " << current.getCleared() << "\n";
-            if (current.getMoves > 0)
+            if (current.getMoves() > 0)
             {
             cout << "Moves Left: " << 15 - current.getMoves() << "\n";
             }
-            
+
             if (current.getCleared() >= 100)
             {
                 cout << "Congrats! You win! You may continue playing or type start to start over!\n";
