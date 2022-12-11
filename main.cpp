@@ -9,18 +9,6 @@ using namespace std;
 bool inGame;
 game current;
 
-bool checkForEmpty ()
-{
-    for (int i = 0; i < 9; ++i)
-    {
-        for (int j = 0; j < 9; ++j)
-        {
-            if (current.get(i, j) == 0) return true;
-        }
-    }
-    return false;
-}
-
 int main()
 {
     cout << "Welcome to Candy Crush by David and Lucas!\nType \"start\" to begin!\n";
@@ -35,6 +23,11 @@ int main()
         if (command == "start")
         {
             current = game();
+            while (current.check3())
+            {
+                current = game();
+            }
+
             cout << current << endl;
             inGame = true;
 
@@ -48,20 +41,20 @@ int main()
                 continue;
             }
             // Check to make sure that swap works
-            if (current.check3()) {
-                int x1, y1, x2, y2;
-                iss >> x1;
-                iss >> y1;
-                iss >> x2;
-                iss >> y2;
+            int x1, y1, x2, y2;
+            iss >> x1;
+            iss >> y1;
+            iss >> x2;
+            iss >> y2;
+            current.swap(x1, y1, x2, y2);
+            if (!current.check3()) {
+                cout << "Please swap two valid candies!" << endl;
                 current.swap(x1, y1, x2, y2);
-            } else
-            {
-                cout << "Please swap two valid candies!\n";
                 continue;
             }
 
-            // Do swapping, and iterate through swapping, calculating the blocks broken
+            // Iterate through swapping, calculating the blocks broken
+            current.update();
 
             // Check for cleared or too many moves
             cout << "Cleared: " << current.getCleared() << "\n";

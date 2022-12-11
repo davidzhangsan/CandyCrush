@@ -48,21 +48,22 @@ void game::setMoves(int m)
 
 void game::update()
 {
-    while(game::remove())
-    {
-        
-    }
-    //implement clearing/display clearing
+    cout << *this;
+    // while(game::remove())
+    // {
+    //     cout << this;
+    //     game::fall();
+    //     cout << this;
+    // }
 }
 
 // Remove function to remove all 3s/4s/5s, leaving a special candy or empty space.
 // Returns false if nothing to remove.
 bool game::remove() {
-    
+    cout << "yayy!!";
 }
 
-// Fall function generates new candies and causes ones to fall if not there
-
+// Fall function generates new candies and causes ones to fall if space below is EMPTY
 void game::fall()
 {
     for (int j = 0; j < grid[j].size(); ++j)
@@ -76,11 +77,24 @@ void game::fall()
                 ++x;
             }
         }
+
+        int k {0};
+        while (grid[k][j] == EMPTY)
+        {
+            grid[k][j] = static_cast<Candy>(randomCandy());
+            ++k;
+        }
     }
 }
 
 void game::swap(int x1, int y1, int x2, int y2)
 {
+    int temp1 {y1};
+    int temp2 {y2};
+    y1 = x1 - 1;
+    x1 = temp1 - 1;
+    y2 = x2 - 1;
+    x2 = temp2 - 1;
     if (grid[x1][y1] == grid[x2][y2]) return;
     if (x1 != x2 && y1 != y2) return;
     if ((x1 == x2 && abs(y1 - y2) == 1) || (y1 == y2 && abs(x1 - x2) == 1)) {
@@ -106,10 +120,10 @@ bool game::check3()
     }
 
     // Vertical Checks
-    for (int j = 1; j < grid[0].size(); ++j)
+    for (int j = 0; j < grid[0].size(); ++j)
     {
         lastCount = 1;
-        for (int i = 0; i < grid.size(); ++i)
+        for (int i = 1; i < grid.size(); ++i)
         {
             if (grid[i][j] == grid[i-1][j]) ++lastCount;
             else lastCount = 1;
