@@ -6,8 +6,7 @@
 
 using namespace std;
 
-bool won;
-int moves;
+bool inGame;
 game current;
 
 bool checkForEmpty ()
@@ -37,11 +36,41 @@ int main()
         {
             current = game();
             cout << current << endl;
+            inGame = true;
+
         }
 
         else if (command == "swap")
         {
+            if (!inGame)
+            {
+                cout << "Type start to begin a new game!";
+                continue;
+            }
             //maybe a score calculator? or set some form of objective of the game
+            // Check to make sure that swap works
+
+            // Do swapping, and iterate through swapping, calculating the blocks broken
+
+            // Check for cleared or too many moves
+            cout << "Cleared: " << current.getCleared() << "\n";
+            if (current.getMoves > 0)
+            {
+            cout << "Moves Left: " << 15 - current.getMoves() << "\n";
+            }
+            
+            if (current.getCleared() >= 100)
+            {
+                cout << "Congrats! You win! You may continue playing or type start to start over!\n";
+                current.setMoves(-999999);
+            }
+
+            if (current.getMoves() >= 15)
+            {
+                inGame = false;
+                cout << "Game over! No moves left! Type start to try again!\n";
+            }
+
         }
 
         else if (command == "save")

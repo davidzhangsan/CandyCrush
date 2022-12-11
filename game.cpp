@@ -12,6 +12,7 @@ game::game()
     // Implement random board construtor.
     grid = randomBoard();
     cleared = 0;
+    moves = 0;
 }
 
 game::game(string filePath)
@@ -33,6 +34,16 @@ Candy game::get(int i, int j)
 int game::getCleared()
 {
     return cleared;
+}
+
+int game::getMoves()
+{
+    return moves;
+}
+
+void game::setMoves(int m)
+{
+    moves = m;
 }
 
 void update()

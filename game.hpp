@@ -39,6 +39,7 @@ class game
 private:
     std::vector<std::vector<Candy>> grid;
     int cleared;
+    int moves;
 
 public:
     game();
