@@ -9,6 +9,8 @@ using namespace std;
 bool inGame;
 game current;
 
+//Maybe we could just use 9 instead of grid.size()? lol
+
 int main()
 {
     cout << "Welcome to Candy Crush by David and Lucas!\nType \"start\" or \"load <filename>\" to begin!\n";
@@ -23,9 +25,11 @@ int main()
         if (command == "start")
         {
             current = game();
-            while (current.check3())
+            pair<int, int> temp = current.checkR(3);
+            while (temp.first + temp.second != -2)
             {
                 current = game();
+                temp = current.checkR(3);
             }
 
             cout << current << endl;
@@ -47,7 +51,8 @@ int main()
             iss >> x2;
             iss >> y2;
             current.swap(x1, y1, x2, y2);
-            if (!current.check3()) {
+            pair<int, int> temp = current.checkR(3);
+            if (temp.first + temp.second == -2) {
                 cout << "Please swap two valid candies!" << endl;
                 current.swap(x1, y1, x2, y2);
                 continue;
@@ -74,7 +79,6 @@ int main()
                 inGame = false;
                 cout << "Game over! No moves left! Type start to try again!\n";
             }
-            //display moves and inGame?
         }
 
         else if (command == "save")

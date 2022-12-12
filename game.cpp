@@ -79,7 +79,7 @@ void game::update()
 // Remove function to remove all 3s/4s/5s, leaving a special candy or empty space.
 // Returns false if nothing to remove.
 bool game::remove() {
-    cout << "yayy!!";
+    
     return false;
 }
 
@@ -124,8 +124,11 @@ void game::swap(int x1, int y1, int x2, int y2)
     }
 }
 
-bool game::check3()
+pair<int, int> game::checkR(int num)
 {
+    //check 3, 4, or 5 in a row
+    //return the position for the empty space/new candy
+
     int lastCount = 1;
     // Horizontal Checks
     for (int i = 0; i < (int) grid.size(); ++i)
@@ -135,7 +138,7 @@ bool game::check3()
         {
             if (grid[i][j] == grid[i][j-1]) ++lastCount;
             else lastCount = 1;
-            if (lastCount >= 3) return true;
+            if (lastCount >= num) return make_pair(i, j);
         }
     }
 
@@ -147,13 +150,59 @@ bool game::check3()
         {
             if (grid[i][j] == grid[i-1][j]) ++lastCount;
             else lastCount = 1;
-            if (lastCount >= 3) return true;
+            if (lastCount >= num) return make_pair(i, j);
         }
     }
 
-    return false;
+    return make_pair(-1, -1);
 }
 
+inline int game::checkHelp(int i, int j) {
+    /*
+        two basic shapes:
+
+        ***  *      *    *
+         *   ***  ***    *
+         *   *      *   ***
+
+        *      *
+        *      * 
+        ***  ***
+
+        The candy/empty space is at the rightmost of the bottom row.
+    */
+
+    int cur = static_cast<int>(grid[i][j]);
+    for(int i = 0; i < 4; i++) 
+    {
+        int cnt = 0;
+        for(int j = 0; j < 4; j++)
+        {
+            int I = t[i][j][0], J = t[i][j][1];
+            if(I >= 0 && J >= 0 && I < 9 && J < 9 && static_cast<int>(grid[I][J]) == cur) {
+                cnt++;
+            }
+        }
+        if(cnt == 4) {
+            //maybe do something to clear the board?
+            return i;
+        }
+    }
+
+    return -1; //not found
+}
+
+pair<int, int> game::check5LT()
+{
+    for (int i = 1; i < 9; i++) 
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if(checkHelp(i, j)) return make_pair(i, j);
+        }
+    }
+    return make_pair(-1, -1);
+}
 
 
 ostream & operator<<(ostream & os, const game & g)

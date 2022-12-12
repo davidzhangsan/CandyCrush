@@ -34,6 +34,18 @@ enum Candy
         COLORBOMB = 40
     };
 
+const int t[4][4][2] =  {
+                            {{-2, -1}, {-2, 0}, {-2, 1}, {-1, 0}},
+                            {{-2, 0}, {-1, 0}, {-1, 1}, {-1, 2}},
+                            {{-2, 0}, {-1, 0}, {-1, -1}, {-1, -2}},
+                            {{-2, -1}, {-1, -1}, {0, -1}, {0, -2}}
+                        };
+
+const int l[2][4][2] =  {    
+                            {{0, -1}, {0, -2}, {-1, -2}, {-2, -2}},
+                            {{0, -1}, {0, -2}, {-1, 0}, {-2, 0}}
+                        };
+
 class game
 {
 private:
@@ -54,7 +66,9 @@ public:
     void setMoves(int);
     void update();
     void swap(int, int, int, int);
-    bool check3();
+    std::pair<int, int> checkR(int);
+    int checkHelp(int, int);
+    std::pair<int, int> check5LT();
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
 
