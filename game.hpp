@@ -53,7 +53,7 @@ private:
     int cleared;
     int moves;
     
-    bool remove();
+    void remove();
     void fall();
 
 public:
@@ -66,9 +66,10 @@ public:
     void setMoves(int);
     void update();
     void swap(int, int, int, int);
-    std::pair<int, int> checkR(int);
+    bool stuck();
+    bool checkR(int);
     bool checkHelp(int, int);
-    std::pair<int, int> check5LT();
+    bool check5LT();
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
 

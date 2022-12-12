@@ -25,11 +25,9 @@ int main()
         if (command == "start")
         {
             current = game();
-            pair<int, int> temp = current.checkR(3);
-            while (temp.first + temp.second != -2)
+            while (!current.stuck())
             {
                 current = game();
-                temp = current.checkR(3);
             }
 
             cout << current << endl;
@@ -51,8 +49,7 @@ int main()
             iss >> x2;
             iss >> y2;
             current.swap(x1, y1, x2, y2);
-            pair<int, int> temp = current.checkR(3);
-            if (temp.first + temp.second == -2) {
+            if (current.stuck()) {
                 cout << "Please swap two valid candies!" << endl;
                 current.swap(x1, y1, x2, y2);
                 continue;

@@ -68,19 +68,27 @@ void game::setMoves(int m)
 void game::update()
 {
     cout << *this;
-    // while(game::remove())
-    // {
-    //     cout << this;
-    //     game::fall();
-    //     cout << this;
-    // }
+    while(!stuck())
+    {
+        remove();
+        cout << *this;
+        fall();
+        cout << *this;
+    }
 }
 
-// Remove function to remove all 3s/4s/5s, leaving a special candy or empty space.
+// Remove function to remove a 3s/4s/5s, leaving a special candy or empty space.
 // Returns false if nothing to remove.
-bool game::remove() {
-    
-    return false;
+
+// Need to keep track of move and cleared.
+void game::remove() {
+    if (!check5LT()) {
+        if (!checkR(5)) {
+            if (!checkR(4)) {
+                checkR(3);
+            }
+        }
+    }
 }
 
 // Fall function generates new candies and causes ones to fall if space below is EMPTY
@@ -124,10 +132,46 @@ void game::swap(int x1, int y1, int x2, int y2)
     }
 }
 
-pair<int, int> game::checkR(int num)
+
+//return true if something can be swapped to eliminate candies
+bool game::stuck() {
+    int lastCount = 1;
+    // Horizontal Checks
+    for (int i = 0; i < (int) grid.size(); ++i)
+    {
+        lastCount = 1;
+        for (int j = 1; j < (int) grid[0].size(); ++j)
+        {
+            if (grid[i][j] == grid[i][j-1]) ++lastCount;
+            else lastCount = 1;
+            if (lastCount >= 3) {
+                return false;
+            }
+        }
+    }
+
+    // Vertical Checks
+    for (int j = 0; j < (int) grid[0].size(); ++j)
+    {
+        lastCount = 1;
+        for (int i = 1; i < (int) grid.size(); ++i)
+        {
+            if (grid[i][j] == grid[i-1][j]) ++lastCount;
+            else lastCount = 1;
+            if (lastCount >= 3) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+bool game::checkR(int num)
 {
-    //check 3, 4, or 5 in a row
-    //return the position for the empty space/new candy
+    // check 3, 4, or 5 in a row
+    // update the grid
+    // return the position for the empty space/new candy
 
     int lastCount = 1;
     // Horizontal Checks
@@ -139,7 +183,6 @@ pair<int, int> game::checkR(int num)
             if (grid[i][j] == grid[i][j-1]) ++lastCount;
             else lastCount = 1;
             if (lastCount >= num) {
-                pair<int, int> ans = make_pair(i, j);
                 switch(num) {
                     case 3 : grid[i][j] = EMPTY;
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 10);
@@ -148,7 +191,8 @@ pair<int, int> game::checkR(int num)
                 for(int k = 0; k < 3; k++, --j) {
                     grid[i][j] = EMPTY;
                 }
-                return ans;
+                cleared += num;
+                return true;
             }
         }
     }
@@ -162,7 +206,6 @@ pair<int, int> game::checkR(int num)
             if (grid[i][j] == grid[i-1][j]) ++lastCount;
             else lastCount = 1;
             if (lastCount >= num) {
-                pair<int, int> ans = make_pair(i, j);
                 switch(num) {
                     case 3 : grid[i][j] = EMPTY;
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 20);
@@ -171,12 +214,13 @@ pair<int, int> game::checkR(int num)
                 for(int k = 0; k < 3; k++, --i) {
                     grid[i][j] = EMPTY;
                 }
-                return ans;
+                cleared += num;
+                return true;
             }
         }
     }
 
-    return make_pair(-1, -1);
+    return false;
 }
 
 inline bool game::checkHelp(int i, int j) {
@@ -240,18 +284,19 @@ inline bool game::checkHelp(int i, int j) {
     return false; //not found
 }
 
-pair<int, int> game::check5LT()
+bool game::check5LT()
 {
     for (int i = 1; i < 9; i++) 
     {
         for (int j = 0; j < 9; j++)
         {
             if(checkHelp(i, j)) {
-                return make_pair(i, j);
+                cleared += 5;
+                return true;
             }
         }
     }
-    return make_pair(-1, -1);
+    return false;
 }
 
 
@@ -323,6 +368,5 @@ ostream & operator<<(ostream & os, const game & g)
         }
         os << endl;
     }
-    os << "Moves Taken: " << g.moves << endl << "Candies Cleared: " << g.cleared << endl;
     return os;
 }
