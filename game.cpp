@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <unistd.h>
 
 using namespace std;
 
@@ -72,6 +73,7 @@ void game::update()
     {
         remove();
         cout << *this;
+        usleep(100000);
         fall();
         cout << *this;
     }
