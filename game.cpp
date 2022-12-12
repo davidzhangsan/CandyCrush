@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <unistd.h>
+// #include <unistd.h>
 
 using namespace std;
 
@@ -73,7 +73,7 @@ void game::update()
     {
         remove();
         cout << *this;
-        usleep(100000);
+        // usleep(100000);
         fall();
         cout << *this;
     }
@@ -103,13 +103,14 @@ void game::fall()
             int x = i;
             while (x != (int) grid.size() - 1 && grid[x + 1][j] == EMPTY)
             {
-                game::swap(x, j, x + 1, j);
+                grid[x + 1][j] = grid[x][j];
+                grid[x][j] = EMPTY;
                 ++x;
             }
         }
 
         int k {0};
-        while (grid[k][j] == EMPTY)
+        while (k < grid.size() && grid[k][j] == EMPTY)
         {
             grid[k][j] = randomCandy();
             ++k;
