@@ -138,7 +138,18 @@ pair<int, int> game::checkR(int num)
         {
             if (grid[i][j] == grid[i][j-1]) ++lastCount;
             else lastCount = 1;
-            if (lastCount >= num) return make_pair(i, j);
+            if (lastCount >= num) {
+                pair<int, int> ans = make_pair(i, j);
+                switch(num) {
+                    case 3 : grid[i][j] = EMPTY;
+                    case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 10);
+                    case 5 : grid[i][j] = COLORBOMB;
+                }
+                for(int k = 0; k < 3; k++, --j) {
+                    grid[i][j] = EMPTY;
+                }
+                return ans;
+            }
         }
     }
 
@@ -150,14 +161,25 @@ pair<int, int> game::checkR(int num)
         {
             if (grid[i][j] == grid[i-1][j]) ++lastCount;
             else lastCount = 1;
-            if (lastCount >= num) return make_pair(i, j);
+            if (lastCount >= num) {
+                pair<int, int> ans = make_pair(i, j);
+                switch(num) {
+                    case 3 : grid[i][j] = EMPTY;
+                    case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 20);
+                    case 5 : grid[i][j] = COLORBOMB;
+                }
+                for(int k = 0; k < 3; k++, --i) {
+                    grid[i][j] = EMPTY;
+                }
+                return ans;
+            }
         }
     }
 
     return make_pair(-1, -1);
 }
 
-inline int game::checkHelp(int i, int j) {
+inline bool game::checkHelp(int i, int j) {
     /*
         two basic shapes:
 
@@ -184,12 +206,38 @@ inline int game::checkHelp(int i, int j) {
             }
         }
         if(cnt == 4) {
-            //maybe do something to clear the board?
-            return i;
+            for(int j = 0; j < 4; j++)
+            {
+                int I = l[i][j][0], J = l[i][j][1];
+                grid[I][J] = EMPTY;
+            }
+            grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 30);
+            return true;
         }
     }
 
-    return -1; //not found
+    for(int i = 0; i < 2; i++) 
+    {
+        int cnt = 0;
+        for(int j = 0; j < 4; j++)
+        {
+            int I = l[i][j][0], J = l[i][j][1];
+            if(I >= 0 && J >= 0 && I < 9 && J < 9 && static_cast<int>(grid[I][J]) == cur) {
+                cnt++;
+            }
+        }
+        if(cnt == 4) {
+            for(int j = 0; j < 4; j++)
+            {
+                int I = l[i][j][0], J = l[i][j][1];
+                grid[I][J] = EMPTY;
+            }
+            grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 30);
+            return true;
+        }
+    }
+
+    return false; //not found
 }
 
 pair<int, int> game::check5LT()
@@ -198,7 +246,9 @@ pair<int, int> game::check5LT()
     {
         for (int j = 0; j < 9; j++)
         {
-            if(checkHelp(i, j)) return make_pair(i, j);
+            if(checkHelp(i, j)) {
+                return make_pair(i, j);
+            }
         }
     }
     return make_pair(-1, -1);

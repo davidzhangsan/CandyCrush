@@ -67,7 +67,7 @@ public:
     void update();
     void swap(int, int, int, int);
     std::pair<int, int> checkR(int);
-    int checkHelp(int, int);
+    bool checkHelp(int, int);
     std::pair<int, int> check5LT();
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
