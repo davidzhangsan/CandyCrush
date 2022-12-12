@@ -224,5 +224,6 @@ ostream & operator<<(ostream & os, const game & g)
         }
         os << endl;
     }
-    return os; //just to compile
+    os << "Moves Taken: " << g.moves << endl << "Candies Cleared: " << g.cleared << endl;
+    return os;
 }
