@@ -55,6 +55,8 @@ private:
     
     void remove();
     void fall();
+    void eraseHelper(int, int);
+    bool inBounds(int, int);
 
 public:
     game();
@@ -70,6 +72,7 @@ public:
     bool checkR(int);
     bool checkHelp(int, int);
     bool check5LT();
+    void colorBomb(int, int, int, int);
     friend std::ostream & operator<<(std::ostream & os, const game & g);
 };
 

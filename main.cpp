@@ -29,7 +29,6 @@ int main()
             {
                 current = game();
             }
-
             cout << current << endl;
             inGame = true;
 
@@ -49,7 +48,11 @@ int main()
             iss >> x2;
             iss >> y2;
             current.swap(x1, y1, x2, y2);
-            if (current.stuck()) {
+            if (current.get(y1 - 1, x1 - 1) == 40 || current.get(y2 - 1, x2 - 1) == 40)
+            {
+                // Remove same colored pieces
+                
+            } else if (current.stuck()) {
                 cout << "Please swap two valid candies!" << endl;
                 current.swap(x1, y1, x2, y2);
                 continue;
@@ -62,16 +65,14 @@ int main()
             cout << "Cleared: " << current.getCleared() << "\n";
             if (current.getMoves() > 0)
             {
-            cout << "Moves Left: " << 15 - current.getMoves() << "\n";
+            cout << "Moves Left: " << 10 - current.getMoves() << "\n";
             }
 
             if (current.getCleared() >= 100)
             {
                 cout << "Congrats! You win! You may continue playing or type start to start over!\n";
                 current.setMoves(-999999);
-            }
-
-            if (current.getMoves() >= 15)
+            } else if (current.getMoves() >= 10)
             {
                 inGame = false;
                 cout << "Game over! No moves left! Type start to try again!\n";

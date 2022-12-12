@@ -68,6 +68,7 @@ void game::setMoves(int m)
 
 void game::update()
 {
+    ++moves;
     cout << *this;
     while(!stuck())
     {
@@ -84,13 +85,45 @@ void game::update()
 
 // Need to keep track of move and cleared.
 void game::remove() {
-    if (!check5LT()) {
-        if (!checkR(5)) {
+    if (!checkR(5)) {
+        if (!check5LT()) {
             if (!checkR(4)) {
                 checkR(3);
             }
         }
     }
+}
+
+void game::eraseHelper(int i1, int j1) {
+    Candy cur = grid[i1][j1];
+    if (cur == COLORBOMB) return;
+    else if (cur > 30)
+    {
+        for (int i {-1}; i <= 1; ++i) {
+            for (int j {-1}; j <= 1; ++j)
+            {
+                if (inBounds(i + i1, j + j1) && !(i==0 && j==0)) eraseHelper(i, j);
+            }
+        }
+    } else if (cur > 20)
+    {
+        for (int i {0}; i < 9; ++i)
+        {
+            if (i != i1) eraseHelper(i, j1);
+        }
+    } else if (cur > 10)
+    {
+        for (int j {0}; j < 9; ++j)
+        {
+            if (j != j1) eraseHelper(i1, j);
+        }
+    }
+
+    grid[i1][j1] = EMPTY;
+}
+
+inline bool game::inBounds(int i, int j) {
+    return (i >= 0) && (i < 9) && (j >= 0) && (j < 9);
 }
 
 // Fall function generates new candies and causes ones to fall if space below is EMPTY
@@ -136,7 +169,7 @@ void game::swap(int x1, int y1, int x2, int y2)
 }
 
 
-//return true if something can be swapped to eliminate candies
+//return true if candies can be eliminated
 bool game::stuck() {
     int lastCount = 1;
     // Horizontal Checks
@@ -145,7 +178,7 @@ bool game::stuck() {
         lastCount = 1;
         for (int j = 1; j < (int) grid[0].size(); ++j)
         {
-            if (grid[i][j] == grid[i][j-1]) ++lastCount;
+            if ((grid[i][j] % 10 == grid[i][j-1] % 10)) ++lastCount;
             else lastCount = 1;
             if (lastCount >= 3) {
                 return false;
@@ -159,7 +192,7 @@ bool game::stuck() {
         lastCount = 1;
         for (int i = 1; i < (int) grid.size(); ++i)
         {
-            if (grid[i][j] == grid[i-1][j]) ++lastCount;
+            if ((grid[i][j] % 10 == grid[i-1][j] % 10)) ++lastCount;
             else lastCount = 1;
             if (lastCount >= 3) {
                 return false;
@@ -187,12 +220,12 @@ bool game::checkR(int num)
             else lastCount = 1;
             if (lastCount >= num) {
                 switch(num) {
-                    case 3 : grid[i][j] = EMPTY;
+                    case 3 : eraseHelper(i, j);
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 10);
                     case 5 : grid[i][j] = COLORBOMB;
                 }
                 for(int k = 0; k < 3; k++, --j) {
-                    grid[i][j] = EMPTY;
+                    eraseHelper(i, j);
                 }
                 cleared += num;
                 return true;
@@ -210,12 +243,12 @@ bool game::checkR(int num)
             else lastCount = 1;
             if (lastCount >= num) {
                 switch(num) {
-                    case 3 : grid[i][j] = EMPTY;
+                    case 3 : eraseHelper(i, j);
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 20);
                     case 5 : grid[i][j] = COLORBOMB;
                 }
                 for(int k = 0; k < 3; k++, --i) {
-                    grid[i][j] = EMPTY;
+                    eraseHelper(i, j);
                 }
                 cleared += num;
                 return true;
@@ -256,7 +289,7 @@ inline bool game::checkHelp(int i, int j) {
             for(int j = 0; j < 4; j++)
             {
                 int I = l[i][j][0], J = l[i][j][1];
-                grid[I][J] = EMPTY;
+                eraseHelper(I, J);
             }
             grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 30);
             return true;
@@ -277,7 +310,7 @@ inline bool game::checkHelp(int i, int j) {
             for(int j = 0; j < 4; j++)
             {
                 int I = l[i][j][0], J = l[i][j][1];
-                grid[I][J] = EMPTY;
+                eraseHelper(I, J);
             }
             grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 30);
             return true;
@@ -300,6 +333,24 @@ bool game::check5LT()
         }
     }
     return false;
+}
+
+void game::colorBomb(int x1, int y1, int x2, int y2)
+{
+    Candy c1 = grid[y1 - 1][x1 - 1];
+    Candy c2 = grid[y2 - 1][x2 - 1];
+    Candy toRemove;
+    if (c1 == COLORBOMB) toRemove = c2;
+    if (c2 == COLORBOMB) toRemove = c1;
+    for (int i {0}; i < 9; ++i)
+    {
+        for (int j {0}; j < 9; ++j)
+        {
+            if (grid[i][j] == toRemove % 10) eraseHelper(i, j);
+        }
+    }
+    fall();
+    update();
 }
 
 
