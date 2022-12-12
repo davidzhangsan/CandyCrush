@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-// #include <unistd.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -74,7 +74,7 @@ void game::update()
     {
         remove();
         cout << *this;
-        // usleep(100000);
+        usleep(100000);
         fall();
         cout << *this;
     }
@@ -96,6 +96,8 @@ void game::remove() {
 
 void game::eraseHelper(int i1, int j1) {
     Candy cur = grid[i1][j1];
+    if (grid[i1][j1] == EMPTY) return;
+    ++cleared;
     if (cur == COLORBOMB) return;
     else if (cur > 30)
     {
@@ -118,7 +120,6 @@ void game::eraseHelper(int i1, int j1) {
             if (j != j1) eraseHelper(i1, j);
         }
     }
-
     grid[i1][j1] = EMPTY;
 }
 
@@ -216,18 +217,22 @@ bool game::checkR(int num)
         lastCount = 1;
         for (int j = 1; j < (int) grid[0].size(); ++j)
         {
-            if (grid[i][j] == grid[i][j-1]) ++lastCount;
+            if (grid[i][j] % 10 == grid[i][j-1] % 10) ++lastCount;
             else lastCount = 1;
             if (lastCount >= num) {
                 switch(num) {
                     case 3 : eraseHelper(i, j);
+                    break;
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 10);
+                    ++cleared;
+                    break;
                     case 5 : grid[i][j] = COLORBOMB;
+                    ++cleared;
+                    break;
                 }
-                for(int k = 0; k < 3; k++, --j) {
-                    eraseHelper(i, j);
+                for(int k = 1; k < num; k++) {
+                    eraseHelper(i, --j);
                 }
-                cleared += num;
                 return true;
             }
         }
@@ -239,18 +244,22 @@ bool game::checkR(int num)
         lastCount = 1;
         for (int i = 1; i < (int) grid.size(); ++i)
         {
-            if (grid[i][j] == grid[i-1][j]) ++lastCount;
+            if (grid[i][j] % 10 == grid[i-1][j] % 10) ++lastCount;
             else lastCount = 1;
             if (lastCount >= num) {
                 switch(num) {
                     case 3 : eraseHelper(i, j);
+                    break;
                     case 4 : grid[i][j] = static_cast<Candy>(static_cast<int>(grid[i][j]) + 20);
+                    ++cleared;
+                    break;
                     case 5 : grid[i][j] = COLORBOMB;
+                    ++cleared;
+                    break;
                 }
-                for(int k = 0; k < 3; k++, --i) {
-                    eraseHelper(i, j);
+                for(int k = 1; k < num; k++) {
+                    eraseHelper(--i, j);
                 }
-                cleared += num;
                 return true;
             }
         }
@@ -327,7 +336,7 @@ bool game::check5LT()
         for (int j = 0; j < 9; j++)
         {
             if(checkHelp(i, j)) {
-                cleared += 5;
+                ++cleared;
                 return true;
             }
         }

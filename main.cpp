@@ -10,6 +10,7 @@ bool inGame;
 game current;
 
 //Maybe we could just use 9 instead of grid.size()? lol
+// lol - Lucas
 
 int main()
 {
@@ -48,11 +49,8 @@ int main()
             iss >> x2;
             iss >> y2;
             current.swap(x1, y1, x2, y2);
-            if (current.get(y1 - 1, x1 - 1) == 40 || current.get(y2 - 1, x2 - 1) == 40)
-            {
-                // Remove same colored pieces
-                
-            } else if (current.stuck()) {
+            if (current.get(y1 - 1, x1 - 1) == 40 || current.get(y2 - 1, x2 - 1) == 40) current.colorBomb(x1, y1, x2, y2);
+            else if (current.stuck()) {
                 cout << "Please swap two valid candies!" << endl;
                 current.swap(x1, y1, x2, y2);
                 continue;
