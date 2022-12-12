@@ -2,8 +2,6 @@
 
 ## Proposal
 
-Write a short proposal (<500 words) describing your project. In particular, describe any libraries or frameworks you plan to use. Talk about what features of C++ you expect to use, and how you plan to structure your project (Does it have a class hierarchy? Is it a series of class templates?). 
-
 We plan to develop a terminal board game [CandyCrush](https://www.king.com/game/candycrush). We do not plan to use external libraries since the standard library will suffice. We plan to use functionality such as `stringstream` for user commands,  `fstream` for saving/loading function, `Enum`  for storing different types of candies, standard library algorithms for generating random numbers, 2D `vector` to store the game board, etc.
 
 | Lucas                                         | David                                       |
