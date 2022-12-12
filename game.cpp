@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <unistd.h>
+// #include <unistd.h>
 
 using namespace std;
 
@@ -74,7 +74,7 @@ void game::update()
     {
         remove();
         cout << *this;
-        usleep(100000);
+        // usleep(100000);
         fall();
         cout << *this;
     }
@@ -371,7 +371,6 @@ void game::colorBomb(int x1, int y1, int x2, int y2)
     fall();
     update();
 }
-
 
 ostream & operator<<(ostream & os, const game & g)
 {
