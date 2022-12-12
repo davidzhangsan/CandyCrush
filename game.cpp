@@ -101,7 +101,6 @@ void game::eraseHelper(int i1, int j1) {
     if (grid[i1][j1] == EMPTY) return;
     ++cleared;
     if (cur == COLORBOMB) {
-        cur = EMPTY;
         return;
     }
     else if (cur > 30)
