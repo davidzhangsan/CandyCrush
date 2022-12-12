@@ -9,7 +9,7 @@ using namespace std;
 bool inGame;
 game current;
 
-//Maybe we could just use 9 instead of grid.size()? lol
+// Maybe we could just use 9 instead of grid.size()? lol
 // lol - Lucas
 
 int main()
@@ -81,6 +81,11 @@ int main()
         {
             string filePath;
             iss >> filePath;
+            if (!inGame) {
+                cout << "Game Over! Don't Save." << endl;
+                continue;
+            }
+            cout << "Game Saved!" << endl;
             current.save(filePath);
         }
 
@@ -89,7 +94,13 @@ int main()
             string filePath;
             iss >> filePath;
             current = game(filePath);
+            inGame = true;
             cout << current << endl;
+            cout << "Cleared: " << current.getCleared() << "\n";
+            if (current.getMoves() > 0)
+            {
+            cout << "Moves Left: " << 10 - current.getMoves() << "\n";
+            }
         }
 
         else
