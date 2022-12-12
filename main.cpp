@@ -58,7 +58,6 @@ int main()
 
             // Iterate through swapping, calculating the blocks broken
             current.update();
-
             // Check for cleared or too many moves
             cout << "Cleared: " << current.getCleared() << "\n";
             if (current.getMoves() > 0)
