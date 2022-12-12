@@ -18,12 +18,31 @@ game::game()
 game::game(string filePath)
 {
     ifstream fin(filePath);
-    
+    fin >> cleared >> moves;
+    grid = randomBoard();
+
+    for(int i = 0; i < (int) grid.size(); i++) 
+    {
+        for(int j = 0; j < (int) grid[i].size(); j++) {
+            int cur; 
+            fin >> cur;
+            grid[i][j] = static_cast<Candy>(cur);
+        }
+    }
 }
 
-void save(string filePath)
+void game::save(string filePath)
 {
     ofstream fout(filePath);    
+    fout << cleared << " " << moves << endl;
+    for(int i = 0; i < (int) grid.size(); i++) 
+    {
+        for(int j = 0; j < (int) grid[i].size(); j++) {
+            Candy cur = grid[i][j];
+            fout << static_cast<int>(cur) << " ";
+        }
+        fout << endl;
+    }
 }
 
 Candy game::get(int i, int j)
@@ -61,17 +80,18 @@ void game::update()
 // Returns false if nothing to remove.
 bool game::remove() {
     cout << "yayy!!";
+    return false;
 }
 
 // Fall function generates new candies and causes ones to fall if space below is EMPTY
 void game::fall()
 {
-    for (int j = 0; j < grid[j].size(); ++j)
+    for (int j = 0; j < (int) grid[j].size(); ++j)
     {
-        for (int i = grid.size() - 1; i >= 0; --i)
+        for (int i = (int) grid.size() - 1; i >= 0; --i)
         {
             int x = i;
-            while (x != grid.size() - 1 && grid[x + 1][j] == EMPTY)
+            while (x != (int) grid.size() - 1 && grid[x + 1][j] == EMPTY)
             {
                 game::swap(x, j, x + 1, j);
                 ++x;
@@ -81,7 +101,7 @@ void game::fall()
         int k {0};
         while (grid[k][j] == EMPTY)
         {
-            grid[k][j] = static_cast<Candy>(randomCandy());
+            grid[k][j] = randomCandy();
             ++k;
         }
     }
@@ -108,10 +128,10 @@ bool game::check3()
 {
     int lastCount = 1;
     // Horizontal Checks
-    for (int i = 0; i < grid.size(); ++i)
+    for (int i = 0; i < (int) grid.size(); ++i)
     {
         lastCount = 1;
-        for (int j = 1; j < grid[0].size(); ++j)
+        for (int j = 1; j < (int) grid[0].size(); ++j)
         {
             if (grid[i][j] == grid[i][j-1]) ++lastCount;
             else lastCount = 1;
@@ -120,10 +140,10 @@ bool game::check3()
     }
 
     // Vertical Checks
-    for (int j = 0; j < grid[0].size(); ++j)
+    for (int j = 0; j < (int) grid[0].size(); ++j)
     {
         lastCount = 1;
-        for (int i = 1; i < grid.size(); ++i)
+        for (int i = 1; i < (int) grid.size(); ++i)
         {
             if (grid[i][j] == grid[i-1][j]) ++lastCount;
             else lastCount = 1;

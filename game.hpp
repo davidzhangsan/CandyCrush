@@ -47,6 +47,7 @@ private:
 public:
     game();
     game(std::string);
+    void save(std::string);
     Candy get(int, int);
     int getCleared();
     int getMoves();

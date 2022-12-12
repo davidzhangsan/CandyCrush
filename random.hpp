@@ -6,6 +6,6 @@
 
 std::vector<std::vector<Candy> > randomBoard();
 
-int randomCandy();
+Candy randomCandy();
 
 #endif

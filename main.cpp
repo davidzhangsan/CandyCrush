@@ -11,7 +11,7 @@ game current;
 
 int main()
 {
-    cout << "Welcome to Candy Crush by David and Lucas!\nType \"start\" to begin!\n";
+    cout << "Welcome to Candy Crush by David and Lucas!\nType \"start\" or \"load <filename>\" to begin!\n";
     string s;
     while (getline(cin, s))
     {
@@ -74,12 +74,14 @@ int main()
                 inGame = false;
                 cout << "Game over! No moves left! Type start to try again!\n";
             }
-
+            //display moves and inGame?
         }
 
         else if (command == "save")
         {
-
+            string filePath;
+            iss >> filePath;
+            current.save(filePath);
         }
 
         else if (command == "load")
@@ -87,6 +89,7 @@ int main()
             string filePath;
             iss >> filePath;
             current = game(filePath);
+            cout << current << endl;
         }
 
         else
