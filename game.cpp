@@ -72,7 +72,9 @@ void game::update()
     cout << *this;
     while(!stuck())
     {
+        cerr << "in update" << endl;
         remove();
+        cerr << "after remove" << endl;
         cout << *this;
         usleep(100000);
         fall();
@@ -107,7 +109,8 @@ void game::eraseHelper(int i1, int j1) {
         for (int i {-1}; i <= 1; ++i) {
             for (int j {-1}; j <= 1; ++j)
             {
-                if (inBounds(i + i1, j + j1) && !(i==0 && j==0)) eraseHelper(i, j);
+                if (inBounds(i + i1, j + j1) && !(i==0 && j==0)) eraseHelper(i + i1, j + j1);
+                cerr << "erase wrapped candy" << endl;
             }
         }
     } else if (cur > 20)
